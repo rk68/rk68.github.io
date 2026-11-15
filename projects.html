@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects · Rishi Kalra</title>
   <link rel="preload" href="/fonts/tessera.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
   <header>
@@ -20,18 +20,15 @@
     <h1 class="page-title">Projects</h1>
 
     <article class="project">
-      <img class="project-logo" src="media/projects/halo-logo.svg" alt="Halo" width="96" height="32">
-      <p>A local AI assistant with its own desktop. Halo runs H Company's Holo models on a Mac through llama.cpp and Apple Metal. Bots keep saved memory and can work in a sandboxed Linux desktop.</p>
-      <video class="project-media" src="media/projects/halo-demo.mp4?v=2" poster="media/projects/halo-demo-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
-      <p class="muted caption">Halo opens Google in its sandbox, finds a black and white kitten, and shares a screenshot in chat.</p>
-      <p class="project-links"><a href="https://github.com/rk68/halo">GitHub</a></p>
-    </article>
-
-    <article class="project">
-      <h3>Paseo plugins</h3>
-      <p>Two plugins for Paseo, an app that runs many coding agents at once. A PR stack panel shows merge order, CI, reviews and conflicts, with one-click agent fixes. A cluster panel shows Slurm jobs and GPU use on remote machines.</p>
-      <img class="project-media" src="media/projects/paseo-plugins.jpg" alt="The PR stack panel next to a Paseo workspace" loading="lazy">
-      <p class="project-links"><a href="https://github.com/rk68/paseo-plugins">GitHub</a></p>
+      <div class="project-text">
+        <img class="project-logo" src="media/projects/halo-logo.svg" alt="Halo" width="96" height="32">
+        <p>A local AI assistant with its own desktop. Halo runs H Company's Holo models on a Mac through llama.cpp and Apple Metal. Bots keep saved memory and can work in a sandboxed Linux desktop.</p>
+        <p class="project-links"><a href="https://github.com/rk68/halo">GitHub</a></p>
+      </div>
+      <figure class="project-figure">
+        <video class="project-media" src="media/projects/halo-demo.mp4?v=2" poster="media/projects/halo-demo-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        <figcaption class="muted caption">Halo finds a black and white kitten on Google and shares a screenshot in chat.</figcaption>
+      </figure>
     </article>
 
     <h2>More</h2>
