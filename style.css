@@ -64,3 +64,4 @@ ul.items { list-style: none; padding: 0; margin: 0; }
 ul.items li { padding: 16px 0; border-bottom: 1px solid var(--line); }
 ul.items li:last-child { border-bottom: none; }
 ul.items .title { font-weight: 500; }
+.me { color: var(--text); font-weight: 500; }
