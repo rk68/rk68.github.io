@@ -66,6 +66,16 @@ ul.items li:last-child { border-bottom: none; }
 ul.items .title { font-weight: 500; }
 .me { color: var(--text); font-weight: 500; }
 
+ul.items li.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+ul.items li.row > .muted { white-space: nowrap; }
+
+.links { display: flex; flex-wrap: wrap; gap: 20px; }
+
 .hero {
   display: block;
   width: 100%;
