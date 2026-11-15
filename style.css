@@ -155,15 +155,17 @@ ul.items li.row:hover > .muted { color: var(--muted); }
 
 .intro-text { position: relative; z-index: 1; max-width: 400px; }
 
-.eyebrow {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--accent);
-  margin-bottom: 16px;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
-.lede { font-size: 1.125rem; }
+.lede { font-size: 1.375rem; line-height: 1.45; margin-bottom: 16px; }
+.intro .muted { font-size: 1.0625rem; }
 
 /* sits on its own layer and bleeds past the right edge of the text column;
    the mask fade lets it overlap the text area without a visible edge */
