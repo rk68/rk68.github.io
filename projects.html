@@ -6,7 +6,7 @@
   <title>Projects · Rishi Kalra</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <header>
@@ -19,14 +19,31 @@
   </header>
   <main>
     <h1>Projects</h1>
+
+    <article class="project">
+      <img class="project-logo" src="media/projects/halo-logo.svg" alt="Halo" width="96" height="32">
+      <p>A local AI assistant with its own desktop. Halo runs H Company's Holo models on a Mac through llama.cpp and Apple Metal. Bots keep saved memory and can work in a sandboxed Linux desktop.</p>
+      <video class="project-media" src="media/projects/halo-demo.mp4" poster="media/projects/halo-demo-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      <p class="muted caption">Halo opens Google in its sandbox, finds a black and white kitten, and shares a screenshot in chat.</p>
+      <p class="project-links"><a href="https://github.com/rk68/halo">GitHub</a></p>
+    </article>
+
+    <article class="project">
+      <h2>Paseo plugins</h2>
+      <p>Two plugins for Paseo, an app that runs many coding agents at once. A PR stack panel shows merge order, CI, reviews and conflicts, with one-click agent fixes. A cluster panel shows Slurm jobs and GPU use on remote machines.</p>
+      <img class="project-media" src="media/projects/paseo-plugins.jpg" alt="The PR stack panel next to a Paseo workspace" loading="lazy">
+      <p class="project-links"><a href="https://github.com/rk68/paseo-plugins">GitHub</a></p>
+    </article>
+
+    <h2>More</h2>
     <ul class="items">
       <li>
-        <div class="title">Project one</div>
-        <div class="muted">One line on what it does.</div>
+        <div class="title">HyPA-RAG</div>
+        <div class="muted">Adaptive retrieval for AI legal and policy questions, built with Holistic AI. <a href="https://huggingface.co/spaces/rk68/HyPA-RAG">Demo</a> · <a href="https://github.com/rk68/HyPA-RAG">GitHub</a></div>
       </li>
       <li>
-        <div class="title">Project two</div>
-        <div class="muted">One line on what it does.</div>
+        <div class="title">Holistic AI x UCL hackathon, 3rd place</div>
+        <div class="muted">Multi-objective optimisation for trustworthy AI in tabular classification. <a href="https://github.com/rk68/Holistic-AI-Hackathon-Multi-Objective-Optimization-for-AI-Trustworthiness">GitHub</a></div>
       </li>
     </ul>
   </main>
