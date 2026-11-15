@@ -76,10 +76,28 @@ ul.items li.row > .muted { white-space: nowrap; }
 
 .links { display: flex; flex-wrap: wrap; gap: 20px; }
 
+.intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* screen blend drops the video's black to the page black, and the radial
+   mask fades the square edges so no box outline shows */
 .hero {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 0 0 24px;
+  flex: 0 0 200px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(circle at center, #000 45%, transparent 70%);
+  mask-image: radial-gradient(circle at center, #000 45%, transparent 70%);
   pointer-events: none;
+}
+
+@media (max-width: 520px) {
+  .hero { flex-basis: 110px; width: 110px; height: 110px; }
+  ul.items li.row { flex-direction: column; gap: 2px; }
+  ul.items li.row > .muted { order: 3; white-space: normal; }
 }
