@@ -4,8 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rishi Kalra</title>
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preload" href="/fonts/tessera.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=13">
 </head>
 <body>
   <header>
@@ -24,7 +27,8 @@
         <p class="muted rise rise-2">I work across agents, applied AI, model training, software engineering and product, with some research and AI conferences along the way.</p>
       </div>
       <div class="globe" aria-hidden="true">
-        <video class="hero" src="media/globe.mp4?v=2" poster="media/globe-poster.jpg" autoplay muted loop playsinline></video>
+        <canvas></canvas>
+        <noscript><img src="media/globe-poster.jpg" alt=""></noscript>
       </div>
     </section>
 
@@ -92,5 +96,6 @@
       <a href="https://www.linkedin.com/in/-rishi-kalra/">LinkedIn</a>
     </p>
   </main>
+  <script src="globe.js?v=2" defer></script>
 </body>
 </html>
