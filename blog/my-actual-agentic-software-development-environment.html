@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My actual agentic software development environment · Rishi Kalra</title>
+  <meta name="description" content="How I run a herd of Claude Code and Codex agents in Herdr, the skills and checks behind them, and the software factory I'm building around it.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/tessera.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css?v=14">
+</head>
+<body>
+  <header>
+    <a class="name" href="/">Rishi Kalra</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/research.html">Research</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/blog.html" class="active">Blog</a>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <p class="post-meta muted"><a href="/blog.html">Blog</a> · <time datetime="2026-11-19">19 November 2026</time></p>
+      <h1>My actual agentic software development environment</h1>
+      <p class="post-lede">How I run a herd of Claude Code and Codex agents in Herdr, the skills and checks behind them, and the software factory I'm building around it.</p>
+<h2>Two ends of the spectrum</h2>
+<p>We&#39;re at a point where software engineering has two ends of the spectrum. On one end there are huge companies who are only just getting <a href="https://docs.claude.com/en/docs/claude-code/overview">Claude Code</a> access and starting to use the CLI. They&#39;re stuck in a weird pit between the &quot;old way&quot; of hand-writing code and reviewing PRs rigorously. On the other end there are startups, scale-ups and even large tech companies moving incredibly fast, pushing out thousands of PRs a month and not even reviewing the code.</p>
+<p>What fills the gap is apparently the &quot;software factory&quot;, which everyone (on X at least) is talking about. Here I&#39;ll walk through my own setup, and how I&#39;ve been building (and iterating on) a factory of my own.</p>
+<h2>From IDE to ADE</h2>
+<p>I&#39;ve tried a few different tools and systems. Right now there&#39;s a bit of a shift away from running the Claude Code or <a href="https://github.com/openai/codex">Codex</a> CLI in a multi-pane terminal (which was itself the original &quot;crazy&quot; shift away from the IDE) towards dedicated apps for orchestrating agents. I&#39;ve tried a couple of those and think they were a good experience, but I&#39;ve also tried some more advanced multi-pane setups.</p>
+<p>If you&#39;ve already converted from an IDE user to an ADE user (agent development environment) and don&#39;t care much about looking at the code day to day (like me), feel free to skip this part. If not, the conclusion is simple. For most general software engineering, like web dev or full stack TypeScript projects, you don&#39;t need to be looking at the code and you don&#39;t need to be writing it by hand.</p>
+<p>TypeScript is good here because the type system lets the models basically verify whether their code works (compiles), and if it does there&#39;s a good chance it&#39;s right. That was the original thinking anyway. At this point I think the models are so good at popular languages that you just don&#39;t need to be checking the code for bugs at all. The main concerns are whether your intent is captured well enough, and whether someone or something is reviewing the code to catch issues. Both can be handled just by talking to the agent.</p>
+<h2>Getting the intent right</h2>
+<p>In my experience intent can be clarified in two ways.</p>
+<ol>
+<li><strong>You know pretty well what you want.</strong> Then get the agent to interview you. Matt Pocock&#39;s <a href="https://github.com/mattpocock/skills">grill-me</a> skill does exactly this. My version is called <code>grilling</code>: it asks its questions in batched rounds until there&#39;s no open decision left, so you answer five things at once rather than one at a time.</li>
+<li><strong>You don&#39;t actually have all the answers yet.</strong> Then just get the agent started. Ask for a couple of variants, look at them, and iterate by giving it feedback. The <code>prototype</code> skill builds throwaway code for this, either a logic sketch or a few UI options side by side, so you&#39;re reacting to something real instead of describing it in the abstract.</li>
+</ol>
+<p>A small one I use a lot is <code>in-your-own-words</code>, which makes the agent restate what it thinks I&#39;m trying to do before it starts. It catches a surprising number of misunderstandings for about ten seconds of reading.</p>
+<h2>The skills stack</h2>
+<p>Skills are where most of the &quot;factory&quot; actually lives. A skill is just a Markdown file that tells the agent how to do one kind of task, and it loads by itself when a task matches its description. I keep mine in one repo, <a href="https://github.com/rk68/rstack">rstack</a>, and an install script links them into both Claude Code and Codex, so every agent works the same way regardless of model.</p>
+<p>Most of them are adapted from three open source sets, with my own on top:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Skills I use from it</th>
+<th>What for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://github.com/cursor/plugins/tree/main/pstack">pstack</a> by Lauren Tan</td>
+<td><code>blast-radius</code>, <code>benchmark-checklist</code>, <code>correct</code>, <code>how</code>, <code>why</code>, <code>figure-it-out</code>, the formal verification skills</td>
+<td>Checking what a change could break, explaining code, turning repeated mistakes into checks</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mattpocock/skills">Matt Pocock&#39;s skills</a></td>
+<td><code>grilling</code>, <code>tdd</code>, <code>diagnosing-bugs</code>, <code>codebase-design</code>, <code>domain-modeling</code>, <code>prototype</code>, <code>writing-for-agents</code></td>
+<td>Planning, design, debugging and writing skills themselves</td>
+</tr>
+<tr>
+<td><a href="https://github.com/convex/agent-skills">Convex agent skills</a></td>
+<td><code>convex-development</code>, <code>convex-review</code>, <code>convex-verify</code></td>
+<td>Our backend: auth checks, validators, and tests that prove the wrong user gets refused</td>
+</tr>
+<tr>
+<td>My own</td>
+<td><code>commit-pr</code>, <code>typescript-development</code>, <code>typescript-review</code>, <code>review-loop</code>, <code>merge-risk</code>, <code>flaky-tests</code>, <code>unslop</code>, the Herdr skills</td>
+<td>Commits and PRs, reviews, merge risk, flaky tests, and driving agents inside Herdr</td>
+</tr>
+</tbody></table>
+</div><p>On top of the skills there&#39;s a global rules file that every agent reads. The most useful part of it is a short list of <strong>stop points</strong>: the only things an agent has to ask me about, like changing a shared contract, deleting something it didn&#39;t create, spending money, deploying, or merging a PR. Everything else it decides itself and tells me what it decided. That one list removed most of the &quot;should I continue?&quot; interruptions.</p>
+<p>There&#39;s also a git guardrails hook that blocks commands that lose work or touch production (<code>git reset --hard</code>, force pushes, <code>convex deploy</code> and so on). The agent sees why it was blocked and asks me to run the command myself if I really want to.</p>
+<h2>Turn rules into checks</h2>
+<p>A rule in a skill is a request. A lint rule is a fact. Wherever I can, I move a rule out of the prose and into a check the agent can run locally or that CI runs, so it gets instant feedback instead of hoping it remembered.</p>
+<ul>
+<li><strong>A local factory check.</strong> One script runs the repo&#39;s ESLint rules, including the official <a href="https://github.com/convex/agent-skills">Convex ESLint rules</a> and our own custom ones, against a baseline of known issues. Agents must get exit code 0 before they report work as done, so a new violation can&#39;t sneak in.</li>
+<li><strong><code>correct</code> for repeated mistakes.</strong> When an agent makes the same mistake twice, the <a href="https://github.com/cursor/plugins/tree/main/pstack">pstack</a> <code>correct</code> skill turns it into a guardrail: a lint rule, an import boundary, or a test, rather than another line in a skill that might get skipped.</li>
+<li><strong>The type system.</strong> Discriminated unions instead of piles of booleans mean a whole class of invalid states just doesn&#39;t compile. The <code>typescript-review</code> skill flags state that should be one status union.</li>
+<li><strong>Run CI locally, push once.</strong> Every push starts paid CI runners, so the skills run the same checks locally and push once at the end.</li>
+</ul>
+<p>The pattern I keep coming back to: if I&#39;m correcting the same thing in review, it should be a check by next week.</p>
+<h2>How I actually work now</h2>
+<p>One thing I&#39;ve concluded is that closed source ADEs are no good. Agents can build pretty much any piece of software these days, so you should be personalising your ADE. I&#39;d bet money that your use of agents and your tasks are different to mine, so it helps to have your own visualisations and the information you care about at a glance. That&#39;s why I don&#39;t bother with closed source or restrictive dev tools. Open source is really the way to go.</p>
+<p>I really enjoyed <a href="https://github.com/getpaseo/paseo">Paseo</a>, thanks to its mobile app and its worktrees feature for orchestrating multiple agents. Building plugins for it was smooth too, so I could add features like custom PR stacking and merging that fit how I specifically orchestrate agents.</p>
+<p>I&#39;ve since been having a lot of fun with <a href="https://herdr.dev">Herdr</a>. It&#39;s seemingly a regression back to terminal and CLI style orchestration, but with mods (its plugins), the ability to build proper visualisations, and a lot of flexibility generally. Its core runs every agent in a terminal that stays alive when the window closes, and a CLI (<code>hc</code>) lets one agent start, message and wait on others.</p>
+<p>On top of it I&#39;ve built (and keep building) my own Herdr setup, called <a href="https://github.com/rk68/corral">corral</a>. It&#39;s ten mods, a layout, a theme and some key bindings:</p>
+<ul>
+<li><strong>Agent Flow:</strong> a live view of every agent, subagent and process in a space (more below).</li>
+<li><strong>PR Stack and PR Diff:</strong> my open PRs in merge order, with risk, blockers and one-click fixes, plus a pane to review a diff in.</li>
+<li><strong>Schedules:</strong> agents that run on a cadence, since Herdr has no scheduler of its own.</li>
+<li><strong>Usage:</strong> Claude Code and Codex plan limits in the sidebar, so I can see when I&#39;m about to hit a wall.</li>
+<li><strong>Plan:</strong> each agent&#39;s current plan, pulled from Claude Code and Codex hooks.</li>
+<li><strong>Activity:</strong> my GitHub contribution calendar in a pixel style, mostly because I wanted it.</li>
+<li><strong>A Markdown viewer and a file browser,</strong> so specs, plans and statecharts open beside the terminal.</li>
+</ul>
+<figure>
+<video src="../media/blog/agentic-ade/demo.mp4" poster="../media/blog/agentic-ade/demo-poster.jpg" controls muted loop playsinline preload="metadata"></video>
+<figcaption>A 30-second walkthrough of corral, with a Claude Code session and a Codex session making small changes to an example repo.</figcaption>
+</figure>
+
+<p>My day looks like this. I keep my orchestrator agent&#39;s pane open at all times. I often have around ten subagents across Claude Code and Codex running at once, all managed by that one orchestrator: writing code, reviewing PRs, making fixes, watching CI and deployments, and doing research on the web. The orchestrator raises any decisions to me as needed. Each subagent works in its own git worktree, so they never step on each other.</p>
+<p>I also keep a small Claude pane open on the side. Whenever I spot something or have an idea for a new mod, plugin or other feature for my ADE (which is actually quite often), I build it there without disturbing the orchestrator. Most of corral started life in that side pane.</p>
+<figure>
+<img src="../media/blog/agentic-ade/herdr.png" alt="Herdr with a terminal, the contribution squares, a PR diff, Agent Flow and the PR panel" loading="lazy">
+</figure>
+
+<h2>Agent Flow: seeing the whole herd</h2>
+<p>The mod I look at most is Agent Flow. It reads Herdr&#39;s terminals plus each agent&#39;s own session log, so it knows the model, the tools being called and the subagents running inside each Claude Code or Codex process. It has seven views:</p>
+<ul>
+<li><strong>Diagram:</strong> who delegated what to whom, and what came back.</li>
+<li><strong>States:</strong> every agent sits in the state it&#39;s in (thinking, reading, editing, waiting, needs you, done), with lines back to the orchestrator. This is my high level view of whether anyone is stuck or needs input from me.</li>
+<li><strong>Map and Timeline:</strong> the routes and messages between agents over time.</li>
+<li><strong>Context:</strong> how full each agent&#39;s context window is, and when it reset.</li>
+<li><strong>Lanes:</strong> one row per agent and subagent, with tool calls as ticks over time, its status, and what it has spent so far.</li>
+<li><strong>Cost:</strong> spend per agent, including subagents, against the share of my weekly plan limit, plus cache health. A cache miss (where an agent pays to write its whole context again) shows as a marker, with the likely reason, like a model switch or a long idle gap.</li>
+</ul>
+<figure>
+<img src="../media/blog/agentic-ade/agent-flow.gif" alt="Agent Flow's States view, with dots running along the lines while agents work" loading="lazy">
+<figcaption>The States view, here on Agent Flow's built-in example data.</figcaption>
+</figure>
+
+<p>It also flags agents that <strong>look stuck</strong>: the same call failing three times, the same call looping, a tool hanging for 15 minutes, lots of tool calls with no edits for 20 minutes, repeated context resets, or repeated permission denials.</p>
+<p>Lanes and the stuck flags are where I spot processes that need investigating. If one agent keeps failing the same tool call, that&#39;s usually a sign I need a new skill or a check, so I hand it to the <code>correct</code> skill and it becomes a guardrail rather than a recurring annoyance.</p>
+<figure class="pair">
+<img src="../media/blog/agentic-ade/agent-flow-map.png" alt="Agent Flow's Map view" loading="lazy">
+<img src="../media/blog/agentic-ade/agent-flow-timeline.png" alt="Agent Flow's Timeline view" loading="lazy">
+<figcaption>The Map and Timeline views.</figcaption>
+</figure>
+
+<h2>Pull requests: merge risk and the PR stack</h2>
+<p>Recently I added a merge risk classification to every PR: low, medium or high. A small script in the <code>merge-risk</code> skill scores the diff on its size, the sensitive paths it touches (schema and migrations, auth, CI and deploy config, payments, backend, dependencies) and whether code changed with no test changes. The agent writes the result onto the PR as a <code>risk:high</code> style label and a block in the PR&#39;s Risk section. The PR Stack panel imports the same script, so the panel and the agents always agree.</p>
+<p>The level decides how much review a PR gets:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Agent review</th>
+<th>Split first</th>
+<th>Me</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Low</td>
+<td>One round, one reviewer</td>
+<td>No</td>
+<td>I usually let it merge</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>Up to three rounds</td>
+<td>No</td>
+<td>I usually let it merge</td>
+</tr>
+<tr>
+<td>High</td>
+<td>Up to four rounds, two model families, plus a <code>blast-radius</code> pass</td>
+<td>Yes</td>
+<td>I review it myself</td>
+</tr>
+</tbody></table>
+</div><p>High risk PRs get split before review into a stack of easily reviewable PRs: one concern each, under about 400 lines, in the order schema, backend, shared code, UI, clean-up. Each slice gets its own test plan and runs the fast checks for the packages it touches, and the full local CI runs once on the top of the stack. That way when something does need my eyes, it&#39;s a few files with a clear purpose and I can give feedback quickly.</p>
+<p>The review rounds themselves run through the <code>review-loop</code> skill: a Codex reviewer and a Claude reviewer read the branch, I (or the orchestrator) verify each finding, they fix the real ones, and the loop stops when both say there&#39;s nothing left or the round limit is hit.</p>
+<p>The PR Stack panel is where all of this comes together:</p>
+<ul>
+<li>My open PRs in merge order, grouped into stacks, with what blocks each one (CI, conflicts, review comments, a wrong base).</li>
+<li>One-click fixes, including starting an agent to resolve conflicts, fix CI or address review comments. It can do this automatically too.</li>
+<li><strong>Risk first</strong> sorting, which groups PRs by risk with the ones waiting on my review at the top, and a &quot;waiting 6h&quot; badge on each so nothing quietly ages.</li>
+<li>Merging a whole stack into main one PR at a time.</li>
+<li>The CI and deploy status of every recent merge to main. If a check fails, one button starts an agent that finds the cause and opens a fix PR, and another opens a revert PR.</li>
+</ul>
+<p>Clicking a PR&#39;s file count opens PR Diff, a pane for reading the diff file by file. Each file has GitHub&#39;s own &quot;Viewed&quot; box, so ticking a file in Herdr shows on GitHub too.</p>
+<figure>
+<img src="../media/blog/agentic-ade/pr-diff.png" alt="The PR Diff pane, with a file list, the diff and a Viewed box per file" loading="lazy">
+</figure>
+
+<h2>Schedules: the jobs nobody remembers to do</h2>
+<p>Some of the most useful agent work is boring and recurring: checking for flaky tests, updating documentation, and making sure the repo hasn&#39;t drifted from the file structure and import structure you intended. Herdr has no scheduler of its own, so I built a Schedules mod. Each job is a folder, a cadence (hourly, daily or weekly at a set time) and a prompt, and it starts an agent at that time. A run that was due while the app was closed starts once when it next opens.</p>
+<p>The ones I run on our main repo right now:</p>
+<ul>
+<li><strong>Flaky tests, daily.</strong> The <code>flaky-tests</code> skill reads CI history for jobs that failed and then passed on a rerun of the same commit, which is the clearest sign of a flaky test. It then confirms each one locally by running it 30 times in a shuffled order, fixes the root cause (not a retry or a longer timeout), and opens one draft PR per cause. The first run found one CI job that had flaked six times in two weeks.</li>
+<li><strong>Refactor audit, daily.</strong> The <code>monorepo-refactor</code> skill maps the codebase for dead code, duplicated rules, shallow modules and implicit state machines, and writes a dated proposal. It doesn&#39;t touch the code: I read the proposal and say which parts to do.</li>
+<li><strong>Verification upkeep, weekly (next on the list).</strong> Keeps the formal models in the next section in step with the code.</li>
+</ul>
+<p>The nice thing about running these as agents instead of cron scripts is that they can fix what they find, and they report in plain English when there&#39;s nothing to do.</p>
+<h2>Formal verification, without Java</h2>
+<p>pstack comes with formal verification skills built on <a href="https://lamport.azurewebsites.net/tla/tla.html">TLA+</a>: pick the part of the code where a bug costs the most and tests reach the least, model it, and let a model checker try every possible order of events. I liked the idea, but we&#39;re a TypeScript monorepo, and TLA+ needs Java and its own language. So I tried a TypeScript version first.</p>
+<p>The model checker itself is about a hundred lines of TypeScript. You describe the system as states and steps (one step per mutation, scheduled function or outside event), write the rules as invariants, and it explores every reachable state breadth first. If a rule breaks, it gives you the shortest sequence of events that breaks it, plus a statechart. Node runs it directly, so there&#39;s nothing to install.</p>
+<p>I pointed it at our background job lifecycle: start, cancel, freeze, a deadline timer, the workflow finishing, its completion callback and clean-up, in every order. Within 41 milliseconds it had checked about 5,700 states and found a six-step trace where a run would get cleaned up twice. That looked a lot like some &quot;Workflow not found&quot; errors in our CI logs.</p>
+<p>Then I replayed the exact trace as a <a href="https://docs.convex.dev/testing/convex-test">convex-test</a> case against the real code. It turned out the workflow library finishes a run and calls its callback in the same transaction, so the gap the model assumed never happens. The model was wrong, not the code. I fixed the model and all five rules held.</p>
+<p>That&#39;s the loop I&#39;d recommend: the model raises a suspicion cheaply, and a real test settles it. Both outcomes are worth knowing. If your models outgrow about a million states, <a href="https://github.com/informalsystems/quint">Quint</a> is a TypeScript-like spec language whose simulator runs in Node, and <a href="https://github.com/dubzzz/fast-check">fast-check</a> can run model-based tests that tie a model to the real code.</p>
+<p>The statechart renders in the Markdown viewer and re-renders on save, so I can keep it open in a small pane and watch it change as the model does. A proper mod for it is next, with the verification upkeep running on a schedule.</p>
+<h2>The whole factory at a glance</h2>
+<p>Here&#39;s how all of it fits together so far. Solid arrows are the path a change takes from idea to production. Dotted arrows are the feedback loops that keep improving the factory itself.</p>
+<pre class="mermaid">flowchart TD
+  idea[Idea or ticket] --&gt; intent{Know exactly what you want?}
+  intent -- yes --&gt; grill[grilling: batched questions]
+  intent -- no --&gt; proto[prototype: a few variants, then iterate]
+  grill --&gt; orch[Orchestrator agent in Herdr]
+  proto --&gt; orch
+  orch --&gt;|hc run, one worktree each| subs[Subagents: Claude Code and Codex]
+  subs --&gt; code[Write code with skills]
+  code --&gt; checks[Local checks: types, lint, factory check, tests]
+  checks --&gt;|fail| code
+  checks --&gt; risk{merge-risk score}
+  risk -- low or medium --&gt; review[review-loop: 1 to 3 rounds]
+  risk -- high --&gt; split[Split into a stack of small PRs]
+  split --&gt; deep[Up to 4 rounds, Codex and Claude, plus blast-radius]
+  deep --&gt; me[I review it]
+  review --&gt; pr[PR with its risk label]
+  me --&gt; pr
+  pr --&gt; stack[PR Stack: fixes, merge order, merge stack]
+  stack --&gt; main[Merge to main]
+  main --&gt; deploy[CI and deploys]
+  deploy --&gt;|a check fails| fix[Fix or revert agent]
+  fix --&gt; pr
+  subgraph loops [Watching and feedback]
+    flow[Agent Flow: states, lanes, cost, stuck agents]
+    sched[Schedules: flaky tests, refactor audit, verification]
+    correct[correct: repeated mistakes become checks]
+  end
+  subs -.-&gt; flow
+  flow -.-&gt;|repeated failure| correct
+  correct -.-&gt; checks
+  sched -.-&gt;|draft PRs and proposals| pr</pre>
+<h2>What&#39;s next</h2>
+<p>The whole point of building it this way is that whenever a constant failure point shows up, I can fix the factory itself rather than working around it. The next few on my list:</p>
+<ul>
+<li>A statechart panel that keeps the models of our application&#39;s state machines in view, with the verification upkeep updating them on a daily schedule.</li>
+<li>Feeding &quot;this file is covered by a model&quot; into the merge risk score, so a PR that touches verified code reruns the model check as part of its review.</li>
+<li>More rules moved out of skills and into lint checks, every time I catch myself correcting the same thing twice.</li>
+</ul>
+<p>Everything here is open source: the mods are in <a href="https://github.com/rk68/corral">corral</a> and the skills are in <a href="https://github.com/rk68/rstack">rstack</a>. Take what&#39;s useful, and then go build the ADE that fits how <em>you</em> work.</p>
+
+    </article>
+  </main>
+  <script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({ startOnLoad: true, theme: "base", themeVariables: {
+    darkMode: true, background: "#000000", fontFamily: "Tessera, system-ui, sans-serif",
+    primaryColor: "#0d1117", primaryTextColor: "#f2f2f2", primaryBorderColor: "#2a2a30",
+    lineColor: "#5cc8ff", secondaryColor: "#0d1117", tertiaryColor: "#06080b",
+    clusterBkg: "#06080b", clusterBorder: "#2a2a30", edgeLabelBackground: "#000000" } });
+</script>
+</body>
+</html>
