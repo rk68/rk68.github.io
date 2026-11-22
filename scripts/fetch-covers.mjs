@@ -5,7 +5,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { shelves } from "../books.mjs";
+import { categories } from "../books.mjs";
 
 const OUT = join(dirname(fileURLToPath(import.meta.url)), "..", "media", "books");
 mkdirSync(OUT, { recursive: true });
@@ -35,7 +35,7 @@ async function openLibrary(book, author) {
 
 const why = (err) => err.cause?.code ?? err.message;
 
-for (const book of shelves.flatMap((s) => s.books)) {
+for (const book of categories.flatMap((s) => s.books)) {
   const file = join(OUT, `${book.slug}.jpg`);
   if (existsSync(file)) continue;
   const author = book.author.split(/ and | with /)[0];

@@ -1,4 +1,4 @@
-import { shelves } from "/books.mjs?v=6";
+import { categories } from "/books.mjs?v=8";
 
 // Each book is a 3D box: the spine faces the reader and the cover is hinged on its right edge,
 // turned 90 degrees away. Opening a book turns the box so the cover faces the reader.
@@ -42,13 +42,65 @@ function render(book) {
   return li;
 }
 
+// One shelf, laid out in rows. A labelled divider starts each category. Each row keeps an empty
+// stretch at its end as wide as the widest cover, so an opening book pushes only the rest of its
+// own row along and never moves a book onto another row.
 const root = document.querySelector("[data-shelves]");
-for (const shelf of shelves) {
-  const section = document.createElement("section");
-  section.innerHTML = `<h2>${esc(shelf.name)}</h2><ul class="shelf"></ul><p class="shelf-caption" aria-live="polite"></p>`;
-  section.querySelector(".shelf").append(...shelf.books.map(render));
-  root.append(section);
+const shelf = document.createElement("div");
+shelf.className = "shelf";
+const items = [];
+let reserve = 0; // rem
+for (const category of categories) {
+  const divider = document.createElement("li");
+  divider.className = "divider";
+  divider.innerHTML = `<b>${category.books.length}</b><span>${esc(category.name)}</span>`;
+  divider.width = 3; // card plus margins, in rem, as set in style.css
+  items.push(divider);
+  for (const book of category.books) {
+    const li = render(book);
+    const { spine, open } = size(book);
+    li.width = spine;
+    reserve = Math.max(reserve, open - spine);
+    items.push(li);
+  }
 }
+const caption = document.createElement("p");
+caption.className = "shelf-caption";
+caption.setAttribute("aria-live", "polite");
+root.append(shelf, caption);
+
+const GAP = 3; // px between items, as set in style.css
+let laidOutWidth = 0;
+function layout() {
+  const width = shelf.clientWidth;
+  if (width === laidOutWidth) return;
+  laidOutWidth = width;
+  const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const limit = width - reserve * rem;
+  const rows = [[]];
+  let used = 0;
+  for (const item of items) {
+    const w = item.width * rem + GAP;
+    let row = rows.at(-1);
+    if (row.length && used + w > limit) {
+      // A divider never ends a row: it moves down with its first book.
+      const carry = row.at(-1).classList.contains("divider") ? [row.pop()] : [];
+      rows.push(carry);
+      row = carry;
+      used = carry.reduce((n, it) => n + it.width * rem + GAP, 0);
+    }
+    row.push(item);
+    used += w;
+  }
+  shelf.replaceChildren(...rows.map((row) => {
+    const ul = document.createElement("ul");
+    ul.className = "shelf-row";
+    ul.append(...row);
+    return ul;
+  }));
+}
+layout();
+new ResizeObserver(layout).observe(shelf);
 
 // A title too long for its spine drops to a smaller size, as printed spines do.
 // Measure again once Inter loads, because the fallback font is narrower.
@@ -67,24 +119,14 @@ function select(li) {
   if (current) {
     current.classList.remove("open");
     current.querySelector("button").setAttribute("aria-expanded", "false");
-    current.closest("section").querySelector(".shelf-caption").textContent = "";
   }
   current = li === current ? null : li;
+  caption.textContent = "";
   if (!current) return;
   const { book } = current;
   current.classList.add("open");
   current.querySelector("button").setAttribute("aria-expanded", "true");
-  const caption = current.closest("section").querySelector(".shelf-caption");
   caption.innerHTML = `<span class="me">${esc(book.title)}</span> <span class="muted">${esc(book.author)}, ${book.year}</span>`;
-  // Wait for the book to widen, then scroll the shelf sideways (never the page) to show it all.
-  const target = current;
-  setTimeout(() => {
-    const shelf = target.parentElement;
-    const left = target.offsetLeft - shelf.offsetLeft;
-    const over = left + target.offsetWidth - (shelf.scrollLeft + shelf.clientWidth);
-    if (over > 0) shelf.scrollBy({ left: over + 8, behavior: "smooth" });
-    else if (left < shelf.scrollLeft) shelf.scrollTo({ left, behavior: "smooth" });
-  }, 450);
 }
 
 root.addEventListener("click", (e) => {

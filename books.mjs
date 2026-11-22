@@ -1,9 +1,10 @@
-// The bookshelf, one shelf per category. Used by bookshelf.js in the browser and by
-// scripts/fetch-covers.mjs, which saves each cover to media/books/<slug>.jpg.
-// `pages` sets the spine width. `search` overrides the cover search when the title alone finds nothing. `bg` and `fg` colour the spine, and the cover until its image loads. `bg` is each cover's main colour.
-export const shelves = [
+// The bookshelf: one shelf, grouped by category, with a labelled divider before each group.
+// Used by bookshelf.js in the browser and by scripts/fetch-covers.mjs, which saves each cover
+// to media/books/<slug>.jpg. `pages` sets the spine width. `bg` (each cover's main colour) and
+// `fg` colour the spine. `search` overrides the cover search when the title alone finds nothing.
+export const categories = [
   {
-    name: "AI and the future",
+    name: "AI",
     books: [
       { slug: "superintelligence", title: "Superintelligence", author: "Nick Bostrom", year: 2014, pages: 352, bg: "#ffffff", fg: "#1c1c1c" },
       { slug: "the-thinking-machine", title: "The Thinking Machine", author: "Stephen Witt", year: 2025, pages: 272, bg: "#2fd42f", fg: "#1c1c1c" },
@@ -12,19 +13,7 @@ export const shelves = [
     ],
   },
   {
-    name: "Power and history",
-    books: [
-      { slug: "sapiens", title: "Sapiens", author: "Yuval Noah Harari", year: 2011, pages: 443, bg: "#f8f5ee", fg: "#1c1c1c" },
-      { slug: "why-nations-fail", title: "Why Nations Fail", author: "Daron Acemoglu and James A. Robinson", year: 2012, pages: 529, bg: "#add2dc", fg: "#1c1c1c" },
-      { slug: "the-dead-hand", title: "The Dead Hand", author: "David E. Hoffman", year: 2009, pages: 577, bg: "#3893a5", fg: "#f4efe6" },
-      { slug: "the-world-for-sale", title: "The World for Sale", author: "Javier Blas and Jack Farchy", year: 2021, pages: 416, bg: "#010000", fg: "#f4efe6" },
-      { slug: "the-technological-republic", title: "The Technological Republic", author: "Alexander C. Karp and Nicholas W. Zamiska", year: 2025, pages: 320, bg: "#cde9f1", fg: "#1c1c1c" },
-      { slug: "permanent-record", title: "Permanent Record", author: "Edward Snowden", year: 2019, pages: 352, bg: "#f9f9f9", fg: "#1c1c1c" },
-      { slug: "the-age-of-surveillance-capitalism", title: "The Age of Surveillance Capitalism", author: "Shoshana Zuboff", year: 2019, pages: 704, bg: "#fffce9", fg: "#1c1c1c" },
-    ],
-  },
-  {
-    name: "Founders and companies",
+    name: "Startups",
     books: [
       { slug: "zero-to-one", title: "Zero to One", author: "Peter Thiel with Blake Masters", year: 2014, pages: 224, bg: "#7192b8", fg: "#1c1c1c" },
       { slug: "the-lean-startup", title: "The Lean Startup", author: "Eric Ries", year: 2011, pages: 336, bg: "#007ec3", fg: "#f4efe6" },
@@ -36,11 +25,25 @@ export const shelves = [
     ],
   },
   {
-    name: "Risk and markets",
+    name: "Power",
     books: [
-      { slug: "fooled-by-randomness", title: "Fooled by Randomness", author: "Nassim Nicholas Taleb", year: 2001, pages: 316, bg: "#010001", fg: "#f4efe6" },
-      { slug: "the-black-swan", title: "The Black Swan", author: "Nassim Nicholas Taleb", year: 2007, pages: 444, bg: "#fffeff", fg: "#1c1c1c" },
-      { slug: "antifragile", title: "Antifragile", author: "Nassim Nicholas Taleb", year: 2012, pages: 544, bg: "#fefefe", fg: "#1c1c1c" },
+      { slug: "the-technological-republic", title: "The Technological Republic", author: "Alexander C. Karp and Nicholas W. Zamiska", year: 2025, pages: 320, bg: "#cde9f1", fg: "#1c1c1c" },
+      { slug: "permanent-record", title: "Permanent Record", author: "Edward Snowden", year: 2019, pages: 352, bg: "#f9f9f9", fg: "#1c1c1c" },
+      { slug: "the-age-of-surveillance-capitalism", title: "The Age of Surveillance Capitalism", author: "Shoshana Zuboff", year: 2019, pages: 704, bg: "#fffce9", fg: "#1c1c1c" },
+      { slug: "the-dead-hand", title: "The Dead Hand", author: "David E. Hoffman", year: 2009, pages: 577, bg: "#3893a5", fg: "#f4efe6" },
+      { slug: "the-world-for-sale", title: "The World for Sale", author: "Javier Blas and Jack Farchy", year: 2021, pages: 416, bg: "#010000", fg: "#f4efe6" },
+    ],
+  },
+  {
+    name: "History",
+    books: [
+      { slug: "sapiens", title: "Sapiens", author: "Yuval Noah Harari", year: 2011, pages: 443, bg: "#f8f5ee", fg: "#1c1c1c" },
+      { slug: "why-nations-fail", title: "Why Nations Fail", author: "Daron Acemoglu and James A. Robinson", year: 2012, pages: 529, bg: "#add2dc", fg: "#1c1c1c" },
+    ],
+  },
+  {
+    name: "Markets",
+    books: [
       { slug: "the-misbehavior-of-markets", title: "The Misbehavior of Markets", author: "Benoit Mandelbrot and Richard L. Hudson", search: "Mandelbrot markets", year: 2004, pages: 328, bg: "#f7f101", fg: "#1c1c1c" },
       { slug: "a-man-for-all-markets", title: "A Man for All Markets", author: "Edward O. Thorp", year: 2017, pages: 416, bg: "#2a2828", fg: "#f4efe6" },
       { slug: "the-man-who-solved-the-market", title: "The Man Who Solved the Market", author: "Gregory Zuckerman", year: 2019, pages: 400, bg: "#252424", fg: "#f4efe6" },
@@ -49,7 +52,15 @@ export const shelves = [
     ],
   },
   {
-    name: "How we think",
+    name: "Uncertainty",
+    books: [
+      { slug: "fooled-by-randomness", title: "Fooled by Randomness", author: "Nassim Nicholas Taleb", year: 2001, pages: 316, bg: "#010001", fg: "#f4efe6" },
+      { slug: "the-black-swan", title: "The Black Swan", author: "Nassim Nicholas Taleb", year: 2007, pages: 444, bg: "#fffeff", fg: "#1c1c1c" },
+      { slug: "antifragile", title: "Antifragile", author: "Nassim Nicholas Taleb", year: 2012, pages: 544, bg: "#fefefe", fg: "#1c1c1c" },
+    ],
+  },
+  {
+    name: "Mind and body",
     books: [
       { slug: "thinking-fast-and-slow", title: "Thinking, Fast and Slow", author: "Daniel Kahneman", year: 2011, pages: 512, bg: "#faf9f4", fg: "#1c1c1c" },
       { slug: "the-elephant-in-the-brain", title: "The Elephant in the Brain", author: "Kevin Simler and Robin Hanson", year: 2018, pages: 416, bg: "#fdfdfd", fg: "#1c1c1c" },
@@ -58,7 +69,7 @@ export const shelves = [
     ],
   },
   {
-    name: "Fiction",
+    name: "Science fiction",
     books: [
       { slug: "the-three-body-problem", title: "The Three-Body Problem", author: "Cixin Liu", year: 2008, pages: 400, bg: "#275698", fg: "#f4efe6" },
       { slug: "the-dark-forest", title: "The Dark Forest", author: "Cixin Liu", year: 2008, pages: 512, bg: "#1b181a", fg: "#f4efe6" },
@@ -74,6 +85,11 @@ export const shelves = [
       { slug: "reamde", title: "Reamde", author: "Neal Stephenson", year: 2011, pages: 1056, bg: "#f57421", fg: "#f4efe6" },
       { slug: "the-martian", title: "The Martian", author: "Andy Weir", year: 2011, pages: 384, bg: "#f78c36", fg: "#1c1c1c" },
       { slug: "project-hail-mary", title: "Project Hail Mary", author: "Andy Weir", year: 2021, pages: 496, bg: "#020206", fg: "#f4efe6" },
+    ],
+  },
+  {
+    name: "Classics",
+    books: [
       { slug: "crime-and-punishment", title: "Crime and Punishment", author: "Fyodor Dostoevsky", year: 1866, pages: 545, bg: "#292736", fg: "#f4efe6" },
     ],
   },
