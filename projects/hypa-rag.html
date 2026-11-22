@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HyPA-RAG · Rishi Kalra</title>
+  <meta name="theme-color" content="#fff9ed">
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css?v=51">
+  <script src="/site.js?v=1"></script>
+</head>
+<body>
+  <header>
+    <a href="/">Rishi Kalra</a>
+    <nav aria-label="Site"><a href="/projects.html" aria-current="page">Projects</a><a href="/research.html">Research</a><a href="/blog.html">Blog</a></nav>
+  </header>
+  <main class="post">
+    <img class="spot" src="/media/illustrations/projects.webp" width="256" height="256" alt="">
+    <p class="post-meta"><a href="/projects.html">Projects</a> · <a href="https://huggingface.co/spaces/rk68/HyPA-RAG">Demo</a> · <a href="https://github.com/rk68/HyPA-RAG">GitHub</a> · <a href="https://aclanthology.org/2025.naacl-industry.79/">Paper</a></p>
+    <h1>HyPA-RAG</h1>
+    <p class="post-lede">Adaptive retrieval for AI legal and policy questions, built with Holistic AI.</p>
+
+    <p>Language models answer legal and policy questions poorly when their knowledge is out of date or the text mixes qualitative rules with numeric thresholds. Retrieval helps, but a fixed retrieval setup either misses context on hard questions or wastes cost on easy ones.</p>
+    <p>HyPA-RAG, a hybrid parameter-adaptive retrieval-augmented generation system, adapts to each question. We tested it on New York City Local Law 144, which regulates automated hiring tools.</p>
+
+    <h2>How it works</h2>
+    <ul>
+      <li>A classifier rates how complex each question is and sets the retrieval parameters to match.</li>
+      <li>Retrieval combines dense search, sparse keyword search and a knowledge graph.</li>
+      <li>An evaluation framework scores answers with set question types and metrics.</li>
+    </ul>
+    <p>On Local Law 144, HyPA-RAG improved correctness, faithfulness and contextual precision.</p>
+
+    <h2>Published at</h2>
+    <ul>
+      <li>NAACL 2025 Industry Track</li>
+      <li>EMNLP 2024 CustomNLP4U Workshop</li>
+    </ul>
+  </main>
+  <footer><div data-contacts></div></footer>
+</body>
+</html>

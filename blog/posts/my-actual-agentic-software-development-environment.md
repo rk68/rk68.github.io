@@ -1,6 +1,7 @@
 ---
 title: My actual agentic software development environment
 date: 2026-11-19
+image: /media/blog/agentic-ade/thumb.webp
 summary: How I run a herd of Claude Code and Codex agents in Herdr, the skills and checks behind them, and the software factory I'm building around it.
 ---
 

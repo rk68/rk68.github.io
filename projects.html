@@ -4,48 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects · Rishi Kalra</title>
-  <meta name="theme-color" content="#000000">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="preload" href="/fonts/tessera.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=14">
+  <meta name="theme-color" content="#fff9ed">
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css?v=51">
+  <script src="/site.js?v=1"></script>
 </head>
 <body>
   <header>
-    <a class="name" href="/">Rishi Kalra</a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="research.html">Research</a>
-      <a href="projects.html" class="active">Projects</a>
-      <a href="blog.html">Blog</a>
-    </nav>
+    <a href="/">Rishi Kalra</a>
+    <nav aria-label="Site"><a href="/projects.html" aria-current="page">Projects</a><a href="/research.html">Research</a><a href="/blog.html">Blog</a></nav>
   </header>
   <main>
-    <h1 class="page-title">Projects</h1>
-
-    <article class="project">
-      <div class="project-text">
-        <img class="project-logo" src="media/projects/halo-logo.svg" alt="Halo" width="96" height="32">
-        <p>A local AI assistant with its own desktop. Halo runs H Company's Holo models, open-weight vision-language models built for computer use, on a Mac through llama.cpp and Apple Metal. Bots keep saved memory and can work in a sandboxed Linux desktop.</p>
-        <p class="project-links"><a href="https://github.com/rk68/halo">GitHub</a></p>
-      </div>
-      <figure class="project-figure">
-        <video class="project-media" src="media/projects/halo-demo.mp4?v=2" poster="media/projects/halo-demo-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
-        <figcaption class="muted caption">Halo finds a black and white kitten on Google and shares a screenshot in chat.</figcaption>
-      </figure>
-    </article>
-
-    <h2>More</h2>
-    <ul class="items">
+    <img class="spot" src="/media/illustrations/projects.webp" width="256" height="256" alt="">
+    <h1>Projects</h1>
+    <ul class="items link-rows">
       <li>
-        <div class="title">HyPA-RAG</div>
-        <div class="muted">Adaptive retrieval for AI legal and policy questions, built with Holistic AI. <a href="https://huggingface.co/spaces/rk68/HyPA-RAG">Demo</a> · <a href="https://github.com/rk68/HyPA-RAG">GitHub</a></div>
+        <span class="row-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9.4" ry="5.6" transform="rotate(-18 12 12)"/><ellipse cx="12" cy="12" rx="4.8" ry="1.9" transform="rotate(-18 12 12)"/></svg></span>
+        <div>
+          <a class="title" href="/projects/halo.html">Halo</a>
+          <div class="muted">A local AI assistant with its own desktop.</div>
+        </div>
+        <a class="row-link" href="https://github.com/rk68/halo">GitHub</a>
       </li>
       <li>
-        <div class="title">Holistic AI x UCL hackathon, 3rd place</div>
-        <div class="muted">Multi-objective optimisation for trustworthy AI in tabular classification. <a href="https://github.com/rk68/Holistic-AI-Hackathon-Multi-Objective-Optimization-for-AI-Trustworthiness">GitHub</a></div>
+        <span class="row-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5h7.6L16.5 7.4V11M5 3.5v17h7M12.6 3.5v3.9h3.9M8 10.5h5M8 13.5h2.6"/><circle cx="16" cy="16.2" r="3.3"/><path d="m18.4 18.6 2.6 2.6"/></svg></span>
+        <div>
+          <a class="title" href="/projects/hypa-rag.html">HyPA-RAG</a>
+          <div class="muted">Adaptive retrieval for AI legal and policy questions.</div>
+        </div>
+        <a class="row-link" href="https://huggingface.co/spaces/rk68/HyPA-RAG">Demo</a>
+      </li>
+      <li>
+        <span class="row-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 2.8 10.8 9M15.8 2.8 13.2 9"/><circle cx="12" cy="15" r="5.6"/><path d="M10.3 13.2c.6-.8 3-.9 3.1.6.1 1.1-1.2 1.3-1.7 1.3.6 0 2 .2 1.9 1.5-.1 1.5-2.5 1.5-3.3.6"/></svg></span>
+        <div>
+          <a class="title" href="/projects/trustworthy-ai-hackathon.html">Holistic AI x UCL hackathon</a>
+          <div class="muted">Third place. Multi-objective optimisation for trustworthy AI in tabular classification.</div>
+        </div>
+        <a class="row-link" href="https://github.com/rk68/Holistic-AI-Hackathon-Multi-Objective-Optimization-for-AI-Trustworthiness">GitHub</a>
       </li>
     </ul>
   </main>
+  <footer><div data-contacts></div></footer>
 </body>
 </html>

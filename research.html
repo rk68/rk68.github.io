@@ -4,42 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Research · Rishi Kalra</title>
-  <meta name="theme-color" content="#000000">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="preload" href="/fonts/tessera.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=14">
+  <meta name="theme-color" content="#fff9ed">
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css?v=51">
+  <script src="/site.js?v=1"></script>
 </head>
 <body>
   <header>
-    <a class="name" href="/">Rishi Kalra</a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="research.html" class="active">Research</a>
-      <a href="projects.html">Projects</a>
-      <a href="blog.html">Blog</a>
-    </nav>
+    <a href="/">Rishi Kalra</a>
+    <nav aria-label="Site"><a href="/projects.html">Projects</a><a href="/research.html" aria-current="page">Research</a><a href="/blog.html">Blog</a></nav>
   </header>
   <main>
-    <h1 class="page-title">Research</h1>
+    <img class="spot" src="/media/illustrations/research.webp" width="256" height="256" alt="">
+    <h1>Research</h1>
     <p class="muted"><a href="https://scholar.google.com/citations?user=2zi5lWYAAAAJ&amp;hl=en">Google Scholar</a></p>
 
     <h2>Papers</h2>
     <ul class="items">
-      <li>
-        <div class="title">Are Single-Token Sparse Autoencoder Features Causally Necessary? Layer-Depth and SAE-Family Effects</div>
-        <div class="muted">S. Cho, Z. Wu, K. Da Costa, <span class="me">R. Kalra</span>, I. Wicaksono, A. Koshiyama</div>
-        <div class="muted">EMNLP 2026 Main Conference · <a href="https://aclanthology.org/2026.emnlp-main.1794/">ACL Anthology</a> · <a href="https://arxiv.org/abs/2607.20596">arXiv</a></div>
+      <li class="row">
+        <div>
+          <div class="title">Are Single-Token Sparse Autoencoder Features Causally Necessary? Layer-Depth and SAE-Family Effects</div>
+          <div class="muted">S. Cho, Z. Wu, K. Da Costa, <span class="me">R. Kalra</span>, I. Wicaksono, A. Koshiyama</div>
+          <div class="muted">EMNLP 2026 Main Conference</div>
+        </div>
+        <div class="row-links"><a href="https://aclanthology.org/2026.emnlp-main.1794/">Paper</a><a href="https://arxiv.org/abs/2607.20596">arXiv</a></div>
       </li>
-      <li>
-        <div class="title">Probing Implicit Bias Risk Framing in Language Models</div>
-        <div class="muted"><span class="me">R. Kalra</span>, A. Dhelpra, S. Cho, A. Koshiyama</div>
-        <div class="muted">ICLR 2026 Workshop on Algorithmic Fairness Across Alignment Procedures and Agentic Systems (poster) · <a href="https://openreview.net/forum?id=834SNNzCXE">OpenReview</a></div>
+      <li class="row">
+        <div>
+          <div class="title">Probing Implicit Bias Risk Framing in Language Models</div>
+          <div class="muted"><span class="me">R. Kalra</span>, A. Dhelpra, S. Cho, A. Koshiyama</div>
+          <div class="muted">ICLR 2026 Workshop on Algorithmic Fairness Across Alignment Procedures and Agentic Systems (poster)</div>
+        </div>
+        <div class="row-links"><a href="https://openreview.net/forum?id=834SNNzCXE">Paper</a></div>
       </li>
-      <li>
-        <div class="title">HyPA-RAG: A Hybrid Parameter Adaptive Retrieval-Augmented Generation System for AI Legal and Policy Applications</div>
-        <div class="muted"><span class="me">R. Kalra</span>, Z. Wu, A. Gulley, A. Hilliard, X. Guan, A. Koshiyama, P. Treleaven</div>
-        <div class="muted">NAACL 2025 Industry Track · EMNLP 2024 CustomNLP4U Workshop · <a href="https://aclanthology.org/2025.naacl-industry.79/">ACL Anthology</a> · <a href="https://arxiv.org/abs/2409.09046">arXiv</a></div>
+      <li class="row">
+        <div>
+          <div class="title">HyPA-RAG: A Hybrid Parameter Adaptive Retrieval-Augmented Generation System for AI Legal and Policy Applications</div>
+          <div class="muted"><span class="me">R. Kalra</span>, Z. Wu, A. Gulley, A. Hilliard, X. Guan, A. Koshiyama, P. Treleaven</div>
+          <div class="muted">NAACL 2025 Industry Track · EMNLP 2024 CustomNLP4U Workshop</div>
+        </div>
+        <div class="row-links"><a href="https://aclanthology.org/2025.naacl-industry.79/">Paper</a><a href="https://arxiv.org/abs/2409.09046">arXiv</a></div>
       </li>
     </ul>
 
@@ -63,5 +69,6 @@
       </li>
     </ul>
   </main>
+  <footer><div data-contacts></div></footer>
 </body>
 </html>
