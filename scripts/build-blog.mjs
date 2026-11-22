@@ -9,7 +9,7 @@ import { marked } from "./marked.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const POSTS = join(ROOT, "blog", "posts");
-const CSS = "/style.css?v=51";
+const CSS = "/style.css?v=54";
 // Draws ```mermaid blocks in the browser, in the site's colours. Loaded only on pages that have one.
 const MERMAID = `<script type="module">
   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
@@ -41,7 +41,7 @@ function page({ title, description, body, extra = "" }) {
 <body>
   <header>
     <a href="/">Rishi Kalra</a>
-    <nav aria-label="Site"><a href="/projects.html">Projects</a><a href="/research.html">Research</a><a href="/blog.html" aria-current="page">Blog</a></nav>
+    <nav aria-label="Site"><a href="/projects.html">Projects</a><a href="/research.html">Research</a><a href="/blog.html" aria-current="page">Blog</a><a href="/bookshelf.html">Books</a></nav>
   </header>
   <main>
     <img class="spot" src="/media/illustrations/blog.webp" width="256" height="256" alt="">
