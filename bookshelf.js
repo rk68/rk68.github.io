@@ -1,4 +1,4 @@
-import { categories } from "/books.mjs?v=8";
+import { categories } from "/books.mjs?v=9";
 
 // Each book is a 3D box: the spine faces the reader and the cover is hinged on its right edge,
 // turned 90 degrees away. Opening a book turns the box so the cover faces the reader.
@@ -23,9 +23,9 @@ function size(book) {
 function render(book) {
   const { height, spine, cover, open } = size(book);
   const li = document.createElement("li");
-  li.className = "book";
+  li.className = book.reading ? "book reading" : "book";
   li.style.cssText = `--bg:${book.bg};--fg:${book.fg};--h:${height}rem;--spine:${spine}rem;--cover:${cover}rem;--open:${open}rem;--tilt:${-TILT}deg`;
-  li.innerHTML = `<button type="button" aria-expanded="false" aria-label="${esc(book.title)} by ${esc(book.author)}">
+  li.innerHTML = `<button type="button" aria-expanded="false" aria-label="${esc(book.title)} by ${esc(book.author)}${book.reading ? ", currently reading" : ""}">
     <span class="book-box">
       <span class="spine"><span class="spine-title">${esc(book.title)}</span><span class="spine-author">${esc(surname(book.author))}</span></span>
       <span class="cover"><span class="cover-title">${esc(book.title)}</span><span class="cover-author">${esc(book.author)}</span></span>
@@ -126,7 +126,7 @@ function select(li) {
   const { book } = current;
   current.classList.add("open");
   current.querySelector("button").setAttribute("aria-expanded", "true");
-  caption.innerHTML = `<span class="me">${esc(book.title)}</span> <span class="muted">${esc(book.author)}, ${book.year}</span>`;
+  caption.innerHTML = `<span class="me">${esc(book.title)}</span> <span class="muted">${esc(book.author)}, ${book.year}${book.reading ? " · Currently reading" : ""}</span>`;
 }
 
 root.addEventListener("click", (e) => {

@@ -2,6 +2,7 @@
 // Used by bookshelf.js in the browser and by scripts/fetch-covers.mjs, which saves each cover
 // to media/books/<slug>.jpg. `pages` sets the spine width. `bg` (each cover's main colour) and
 // `fg` colour the spine. `search` overrides the cover search when the title alone finds nothing.
+// `reading: true` marks a book I am reading now.
 export const categories = [
   {
     name: "AI",
@@ -71,6 +72,7 @@ export const categories = [
   {
     name: "Science fiction",
     books: [
+      { slug: "do-androids-dream-of-electric-sheep", title: "Do Androids Dream of Electric Sheep?", author: "Philip K. Dick", year: 1968, pages: 256, bg: "#e4e4e4", fg: "#1c1c1c", reading: true },
       { slug: "the-three-body-problem", title: "The Three-Body Problem", author: "Cixin Liu", year: 2008, pages: 400, bg: "#275698", fg: "#f4efe6" },
       { slug: "the-dark-forest", title: "The Dark Forest", author: "Cixin Liu", year: 2008, pages: 512, bg: "#1b181a", fg: "#f4efe6" },
       { slug: "deaths-end", title: "Death's End", author: "Cixin Liu", year: 2010, pages: 604, bg: "#050305", fg: "#f4efe6" },
