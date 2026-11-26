@@ -283,6 +283,20 @@ h2 { margin: 2.75rem 0 .75rem; }
 .post code { padding: 1px 5px; border: 1px solid var(--rule); border-radius: 4px; background: var(--code-bg); font: .875em ui-monospace, Menlo, Consolas, monospace; }
 .post pre { overflow-x: auto; padding: 1rem; border: 1px solid var(--rule); border-radius: 4px; background: var(--code-bg); }
 .post pre code { padding: 0; border: 0; background: none; }
+/* Inline SVG diagrams take the page colours, so they work in both modes. Narrow screens scroll
+   sideways instead of shrinking the text below reading size. */
+.post figure.diagram { overflow-x: auto; }
+.diagram svg { display: block; width: 100%; min-width: 34rem; height: auto; }
+.diagram text { text-anchor: middle; fill: var(--ink); font-family: Inter, sans-serif; }
+.diagram .d-head-text { fill: var(--muted); font-size: 13px; }
+.diagram .d-title { font: 500 14px ui-monospace, Menlo, Consolas, monospace; }
+.diagram .d-sub { fill: var(--muted); font-size: 12px; }
+.diagram .d-path { font: 12.5px ui-monospace, Menlo, Consolas, monospace; }
+.diagram .d-box { fill: none; stroke: var(--rule); stroke-width: 1.5; }
+.diagram .d-src { fill: var(--code-bg); }
+.diagram .d-optional { stroke-dasharray: 5 4; }
+.diagram .d-line { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.diagram .d-head { fill: var(--muted); }
 .post pre.mermaid { padding: .5rem 0; border: 0; background: none; color: var(--muted); font-size: .8125rem; text-align: center; }
 .post .mermaid svg { background: #0d1117; }
 .post figure { margin: 1.75rem 0; }

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>rstack · Rishi Kalra</title>
+  <meta name="description" content="Agent skills, a git safety hook and an installer for Claude Code and Codex.">
+  <link rel="canonical" href="https://rk68.github.io/projects/rstack.html">
+  <link rel="alternate" type="application/rss+xml" title="Rishi Kalra · Blog" href="/feed.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rishi Kalra">
+  <meta property="og:title" content="rstack">
+  <meta property="og:description" content="Agent skills, a git safety hook and an installer for Claude Code and Codex.">
+  <meta property="og:url" content="https://rk68.github.io/projects/rstack.html">
+  <meta property="og:image" content="https://rk68.github.io/media/og/rstack.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#fff9ed">
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css?v=65">
+  <script src="/site.js?v=1"></script>
+</head>
+<body>
+  <header>
+    <a href="/">Rishi Kalra</a>
+    <nav aria-label="Site"><a href="/projects.html" aria-current="page">Projects</a><a href="/research.html">Research</a><a href="/blog.html">Blog</a><a href="/bookshelf.html">Books</a></nav>
+  </header>
+  <main class="post">
+    <p class="post-meta"><a href="/projects.html">Projects</a> · <a href="https://github.com/rk68/rstack">GitHub</a> · <a href="/blog/my-actual-agentic-software-development-environment.html">Blog post</a></p>
+    <h1>rstack</h1>
+    <p class="post-lede">Agent skills, a git safety hook and an installer for Claude Code and Codex.</p>
+
+    <p>rstack holds the skills I use in every repo. A skill is a Markdown file that tells a coding agent how to do one kind of task. The agent loads a skill by itself when a task matches the skill's description. One install script links the same skills into Claude Code and Codex, so both agents follow the same steps.</p>
+
+    <h2>What is in it</h2>
+    <ul>
+      <li>28 skills in six groups: write code, design and plan, test and debug, review and ship, run agents in Herdr, and write prose.</li>
+      <li>A git guardrails hook. It blocks commands that lose work or touch production, such as <code>git reset --hard</code>, <code>git push --force</code> and <code>convex deploy</code>. The agent then asks you to run the command yourself.</li>
+      <li>An optional set of global rules for code, tests, stop points and writing style.</li>
+      <li>An installer that links the skills and registers the hook. It is safe to run more than once. To undo it, run the installer with <code>--uninstall</code>.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 720 300" role="img" aria-labelledby="rstack-diagram-title">
+        <title id="rstack-diagram-title">The installer links skills, the hook and the optional rules from the rstack folder into both Claude Code and Codex.</title>
+        <defs><marker id="rstack-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-head" d="M0 1 9 5 0 9Z"/></marker></defs>
+        <text class="d-head-text" x="100" y="16">Claude Code</text>
+        <text class="d-head-text" x="360" y="16">rstack</text>
+        <text class="d-head-text" x="620" y="16">Codex</text>
+
+        <rect class="d-box" x="1" y="36" width="198" height="60" rx="6"/>
+        <text class="d-path" x="100" y="70">~/.claude/skills/</text>
+        <rect class="d-box d-src" x="261" y="36" width="198" height="60" rx="6"/>
+        <text class="d-title" x="360" y="62">skills/</text>
+        <text class="d-sub" x="360" y="80">28 Markdown skills</text>
+        <rect class="d-box" x="521" y="36" width="198" height="60" rx="6"/>
+        <text class="d-path" x="620" y="70">~/.agents/skills/</text>
+
+        <rect class="d-box" x="1" y="124" width="198" height="60" rx="6"/>
+        <text class="d-path" x="100" y="158">~/.claude/settings.json</text>
+        <rect class="d-box d-src" x="261" y="124" width="198" height="60" rx="6"/>
+        <text class="d-title" x="360" y="150">hooks/</text>
+        <text class="d-sub" x="360" y="168">git guardrails</text>
+        <rect class="d-box" x="521" y="124" width="198" height="60" rx="6"/>
+        <text class="d-path" x="620" y="158">~/.codex/hooks.json</text>
+
+        <rect class="d-box d-optional" x="1" y="212" width="198" height="60" rx="6"/>
+        <text class="d-path" x="100" y="246">~/.claude/CLAUDE.md</text>
+        <rect class="d-box d-src d-optional" x="261" y="212" width="198" height="60" rx="6"/>
+        <text class="d-title" x="360" y="238">GLOBAL.md</text>
+        <text class="d-sub" x="360" y="256">rules, with --rules only</text>
+        <rect class="d-box d-optional" x="521" y="212" width="198" height="60" rx="6"/>
+        <text class="d-path" x="620" y="246">~/.codex/AGENTS.md</text>
+
+        <g class="d-line" marker-end="url(#rstack-arrow)">
+          <path d="M258 66H204"/><path d="M462 66H516"/>
+          <path d="M258 154H204"/><path d="M462 154H516"/>
+          <path d="M258 242H204"/><path d="M462 242H516"/>
+        </g>
+      </svg>
+      <figcaption><code>node install.mjs</code> sets up both agents from one folder. The skills are links, so a <code>git pull</code> in the folder updates them. Dashed boxes need the <code>--rules</code> flag.</figcaption>
+    </figure>
+
+    <h2>The hook in use</h2>
+    <p>When the hook blocks a command, the agent sees the reason and stops. This is a real message from an agent session:</p>
+<pre><code>BLOCKED by git guardrails: this command discards uncommitted work.
+Ask the user to run it, or use a safer command.</code></pre>
+
+    <h2>Install</h2>
+<pre><code>git clone https://github.com/rk68/rstack.git &amp;&amp; cd rstack
+node install.mjs --dry-run   # print what would change
+node install.mjs             # link the skills and register the hook</code></pre>
+
+    <p>The blog post <a href="/blog/my-actual-agentic-software-development-environment.html">My actual agentic software development environment</a> shows how these skills fit into my daily setup. The Herdr skills use the agent templates in <a href="https://github.com/rk68/corral">corral</a>.</p>
+  </main>
+  <footer><div data-contacts></div></footer>
+</body>
+</html>

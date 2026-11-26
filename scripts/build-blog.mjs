@@ -9,7 +9,7 @@ import { marked } from "./marked.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const POSTS = join(ROOT, "blog", "posts");
-const CSS = "/style.css?v=64";
+const CSS = "/style.css?v=65";
 const SITE = "https://rk68.github.io";
 const BLOG_DESCRIPTION = "Writing on agents and how I build software with them.";
 // Draws ```mermaid blocks in the browser, in the site's colours. Loaded only on pages that have one.

@@ -18,7 +18,7 @@
   <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
   <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/style.css?v=64">
+  <link rel="stylesheet" href="/style.css?v=65">
   <script src="/site.js?v=1"></script>
 </head>
 <body>
@@ -27,20 +27,42 @@
     <nav aria-label="Site"><a href="/projects.html" aria-current="page">Projects</a><a href="/research.html">Research</a><a href="/blog.html">Blog</a><a href="/bookshelf.html">Books</a></nav>
   </header>
   <main class="post">
-    <p class="post-meta"><a href="/projects.html">Projects</a> · <a href="https://huggingface.co/spaces/rk68/HyPA-RAG">Demo</a> · <a href="https://github.com/rk68/HyPA-RAG">GitHub</a> · <a href="https://aclanthology.org/2025.naacl-industry.79/">Paper</a></p>
+    <p class="post-meta"><a href="/projects.html">Projects</a> · <a href="https://github.com/rk68/HyPA-RAG">GitHub</a> · <a href="https://aclanthology.org/2025.naacl-industry.79/">Paper</a></p>
     <h1>HyPA-RAG</h1>
     <p class="post-lede">Adaptive retrieval for AI legal and policy questions, built with Holistic AI.</p>
 
     <p>Language models answer legal and policy questions poorly when their knowledge is out of date or the text mixes qualitative rules with numeric thresholds. Retrieval helps, but a fixed retrieval setup either misses context on hard questions or wastes cost on easy ones.</p>
     <p>HyPA-RAG, a hybrid parameter-adaptive retrieval-augmented generation system, adapts to each question. We tested it on New York City Local Law 144, which regulates automated hiring tools.</p>
 
+    <figure>
+      <img src="/media/projects/hypa-rag-architecture.webp" width="1272" height="683" alt="HyPA-RAG architecture: a complexity classifier sets the retrieval parameters, hybrid and knowledge graph retrieval collect context, and the language model answers from it." loading="lazy">
+      <figcaption>The system in three stages: pre-retrieval, retrieval and generation. From the paper.</figcaption>
+    </figure>
+
     <h2>How it works</h2>
     <ul>
-      <li>A classifier rates how complex each question is and sets the retrieval parameters to match.</li>
-      <li>Retrieval combines dense search, sparse keyword search and a knowledge graph.</li>
+      <li>A fine-tuned DistilBERT classifier rates how complex each question is. The rating sets the number of query rewrites, the number of chunks to retrieve and the knowledge graph limits.</li>
+      <li>Dense and sparse keyword retrieval run together, and a reranker orders the results. A knowledge graph adds facts that plain text chunks miss.</li>
       <li>An evaluation framework scores answers with set question types and metrics.</li>
     </ul>
-    <p>On Local Law 144, HyPA-RAG improved correctness, faithfulness and contextual precision.</p>
+
+    <h2>Results</h2>
+    <p>On Local Law 144, adaptive retrieval beat every fixed retrieval setting. Selected rows from the paper:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Method</th><th>Faithfulness</th><th>Answer relevancy</th><th>Correctness</th></tr></thead>
+        <tbody>
+          <tr><td>GPT-4o-mini only, no retrieval</td><td>0.35</td><td>0.63</td><td>0.46</td></tr>
+          <tr><td>Fixed retrieval, top 10 chunks</td><td>0.85</td><td>0.79</td><td>0.77</td></tr>
+          <tr><td>Adaptive, no knowledge graph</td><td>0.90</td><td>0.78</td><td>0.81</td></tr>
+          <tr><td>Adaptive, with knowledge graph</td><td>0.85</td><td>0.77</td><td>0.79</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The adaptive rows use the 3-class classifier. With a query rewriter and a reranker added, the full system reached the highest correctness, 0.84. The <a href="https://github.com/rk68/HyPA-RAG">README</a> has the full table, the repository layout and how to run the code.</p>
+
+    <h2>Demo</h2>
+    <p>The live demo on Hugging Face Spaces is no longer supported. The code is from 2024 and is kept as it was for the paper. The demo app stays in the repository for reference.</p>
 
     <h2>Published at</h2>
     <ul>
