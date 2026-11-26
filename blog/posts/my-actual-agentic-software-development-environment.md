@@ -157,6 +157,8 @@ The nice thing about running these as agents instead of cron scripts is that the
 
 ## Formal verification, without Java
 
+I don't know much about formal verification. I only heard about it from [this video by poteto on X](https://x.com/poteto/status/2102050467505430555).
+
 pstack comes with formal verification skills built on [TLA+](https://lamport.azurewebsites.net/tla/tla.html): pick the part of the code where a bug costs the most and tests reach the least, model it, and let a model checker try every possible order of events. I liked the idea, but we're a TypeScript monorepo, and TLA+ needs Java and its own language. So I tried a TypeScript version first.
 
 The model checker itself is about a hundred lines of TypeScript. You describe the system as states and steps (one step per mutation, scheduled function or outside event), write the rules as invariants, and it explores every reachable state breadth first. If a rule breaks, it gives you the shortest sequence of events that breaks it, plus a statechart. Node runs it directly, so there's nothing to install.

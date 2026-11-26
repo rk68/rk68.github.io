@@ -39,15 +39,14 @@
       <figcaption>The system in three stages: pre-retrieval, retrieval and generation. From the paper.</figcaption>
     </figure>
 
-    <h2>How it works</h2>
+    <p>How it works:</p>
     <ul>
-      <li>A fine-tuned DistilBERT classifier rates how complex each question is. The rating sets the number of query rewrites, the number of chunks to retrieve and the knowledge graph limits.</li>
-      <li>Dense and sparse keyword retrieval run together, and a reranker orders the results. A knowledge graph adds facts that plain text chunks miss.</li>
-      <li>An evaluation framework scores answers with set question types and metrics.</li>
+      <li><strong>A complexity classifier</strong> (a fine-tuned DistilBERT) rates each question, and that rating picks the number of query rewrites, how many chunks to retrieve and how far to go into the knowledge graph.</li>
+      <li><strong>Hybrid retrieval:</strong> dense and BM25 search run together, a reranker orders what comes back, and a knowledge graph fills in the facts that plain chunks miss.</li>
+      <li><strong>An evaluation framework</strong> with its own question types and metrics, so we could tell which parts actually helped.</li>
     </ul>
 
-    <h2>Results</h2>
-    <p>On Local Law 144, adaptive retrieval beat every fixed retrieval setting. Selected rows from the paper:</p>
+    <p>Adaptive retrieval beat every fixed setting we tried on Local Law 144. A few rows from the paper:</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Method</th><th>Faithfulness</th><th>Answer relevancy</th><th>Correctness</th></tr></thead>
@@ -59,16 +58,11 @@
         </tbody>
       </table>
     </div>
-    <p>The adaptive rows use the 3-class classifier. With a query rewriter and a reranker added, the full system reached the highest correctness, 0.84. The <a href="https://github.com/rk68/HyPA-RAG">README</a> has the full table, the repository layout and how to run the code.</p>
+    <p>The adaptive rows use the 3-class classifier. Adding a query rewriter and a reranker on top got the full system to 0.84 correctness, the best of anything we ran. The <a href="https://github.com/rk68/HyPA-RAG">README</a> has the full table and how to run the code.</p>
 
-    <h2>Demo</h2>
-    <p>The live demo on Hugging Face Spaces is no longer supported. The code is from 2024 and is kept as it was for the paper. The demo app stays in the repository for reference.</p>
+    <p>This was all built in 2024, well before I worked the way I do now, so the repo stays as it was for the paper. The live demo on Hugging Face isn't supported any more, but the app code is still in the repo if you're curious.</p>
 
-    <h2>Published at</h2>
-    <ul>
-      <li>NAACL 2025 Industry Track</li>
-      <li>EMNLP 2024 CustomNLP4U Workshop</li>
-    </ul>
+    <p>It was published in the <a href="https://aclanthology.org/2025.naacl-industry.79/">NAACL 2025 Industry Track</a>, and an earlier version was at the EMNLP 2024 CustomNLP4U Workshop.</p>
   </main>
   <footer><div data-contacts></div></footer>
 </body>
