@@ -95,6 +95,9 @@ footer { margin-top: 4rem; padding: 1rem 0 2rem; border-top: 1px solid var(--rul
 .intro.wide .pencil-note { width: 40%; right: 7%; bottom: 3%; }
 .bio { max-width: 27rem; text-align: justify; hyphens: auto; }
 .bio p { margin: 0; }
+/* An organisation's logo sits before its linked name. Underlines skip images, so only the name is underlined. */
+.org { white-space: nowrap; }
+.org img { display: inline-block; width: auto; height: 1em; margin-right: .3em; vertical-align: -.12em; }
 .bio p + p { margin-top: .9em; }
 /* The icons sit under the text. Matching space above keeps the text centred on the painting. */
 .bio .contacts, .bio::before { height: 1.4rem; margin-top: 1.5rem; }
