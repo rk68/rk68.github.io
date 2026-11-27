@@ -95,4 +95,10 @@ export const categories = [
       { slug: "crime-and-punishment", title: "Crime and Punishment", author: "Fyodor Dostoevsky", year: 1866, pages: 545, bg: "#292736", fg: "#f4efe6" },
     ],
   },
+  {
+    name: "Want to read",
+    books: [
+      { slug: "at-home-in-the-universe", title: "At Home in the Universe", author: "Stuart Kauffman", year: 1995, pages: 336, bg: "#0c0e0d", fg: "#f4efe6" },
+    ],
+  },
 ];

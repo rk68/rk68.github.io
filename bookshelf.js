@@ -1,4 +1,4 @@
-import { categories } from "/books.mjs?v=9";
+import { categories } from "/books.mjs?v=10";
 
 // Each book is a 3D box: the spine faces the reader and the cover is hinged on its right edge,
 // turned 90 degrees away. Opening a book turns the box so the cover faces the reader.
