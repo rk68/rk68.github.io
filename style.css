@@ -198,6 +198,9 @@ h2 { margin: 2.75rem 0 .75rem; }
 }
 .divider b { color: var(--accent); font-size: .6875rem; font-weight: 560; font-variant-numeric: tabular-nums; }
 .divider span { writing-mode: vertical-rl; transform: rotate(180deg); color: var(--ink); font-size: .72rem; font-weight: 560; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+/* The divider for books I have not read yet: a dashed outline in the accent colour, with no fill. */
+.divider.upcoming, .divider.upcoming::before { border: 1px dashed var(--accent); border-bottom: 0; background: transparent; }
+.divider.upcoming span { color: var(--accent); }
 .book { flex: none; width: var(--spine); transition: width .5s cubic-bezier(.3, .7, .2, 1); }
 .book.open { width: var(--open); }
 .book button {

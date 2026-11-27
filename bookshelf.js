@@ -1,4 +1,4 @@
-import { categories } from "/books.mjs?v=10";
+import { categories } from "/books.mjs?v=11";
 
 // Each book is a 3D box: the spine faces the reader and the cover is hinged on its right edge,
 // turned 90 degrees away. Opening a book turns the box so the cover faces the reader.
@@ -52,7 +52,7 @@ const items = [];
 let reserve = 0; // rem
 for (const category of categories) {
   const divider = document.createElement("li");
-  divider.className = "divider";
+  divider.className = category.upcoming ? "divider upcoming" : "divider";
   divider.innerHTML = `<b>${category.books.length}</b><span>${esc(category.name)}</span>`;
   divider.width = 3; // card plus margins, in rem, as set in style.css
   items.push(divider);

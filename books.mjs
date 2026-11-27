@@ -2,7 +2,8 @@
 // Used by bookshelf.js in the browser and by scripts/fetch-covers.mjs, which saves each cover
 // to media/books/<slug>.jpg. `pages` sets the spine width. `bg` (each cover's main colour) and
 // `fg` colour the spine. `search` overrides the cover search when the title alone finds nothing.
-// `reading: true` marks a book I am reading now.
+// `reading: true` marks a book I am reading now. A category with `upcoming: true` holds books I
+// have not read yet, and its divider has its own style.
 export const categories = [
   {
     name: "AI",
@@ -97,6 +98,7 @@ export const categories = [
   },
   {
     name: "Want to read",
+    upcoming: true,
     books: [
       { slug: "at-home-in-the-universe", title: "At Home in the Universe", author: "Stuart Kauffman", year: 1995, pages: 336, bg: "#0c0e0d", fg: "#f4efe6" },
     ],
